@@ -576,16 +576,36 @@
 
 /* Main */
 
-/* Footer */
+#footer {
+    text-align: center;
+    background-color: #333; /* 조정된 배경 색상 */
+    color: #FFF; /* 텍스트 색상을 흰색으로 설정 */
+    padding: 20px 0;
+}
 
-	#footer {
-		text-align: center;
-	}
+#footer h3 {
+    color: #FFF;
+}
 
-		#footer .major h2,
-		#footer .major .byline {
-			color: #FFF !important;
-		}
+#footer p {
+    color: #FFF;
+}
+
+#footer .icons a {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    background-color: #555; /* 아이콘 배경 색상 */
+    border-radius: 20px;
+    line-height: 40px;
+    margin: 0 10px;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+#footer .icons a:hover {
+    background-color: #777;
+}
 
 /* Page */
 
@@ -608,26 +628,28 @@
 
 /* Copyright */
 
-	.copyright {
-		color: #ddd;
-		color: rgba(255, 255, 255, 0.2) !important;
-		text-align: center;
-		display: block;
-		width: 100%;
-		padding: 3em 0em;
-	}
+.copyright {
+    color: #000 !important; 
+    text-align: center;
+    display: block;
+    width: 100%;
+    padding: 3em 0em;
+}
 
-		.copyright a {
-			text-decoration: none;
-			color: #ddd;
-			color: rgba(255, 255, 255, 0.4) !important;
-		}
+    .copyright a {
+        text-decoration: none;
+        color: #000 !important; 
+    }
 
 /* Box */
 
-	.box {
-		padding: 3em 2em;
-		background: #FFF;
-		text-align: center;
-		border-radius: 0px 0px 6px 6px;
-	}
+.box {
+	padding: 3em 2em;
+	background: white;
+	text-align: center;
+	border-radius: 0px 0px 6px 6px;
+	color: black; 
+	font-weight: bold; 
+	font-size: 20px; 
+	text-shadow: 2px 2px 4px rgba(0,0,0,0.5); 
+}
