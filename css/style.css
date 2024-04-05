@@ -653,3 +653,17 @@
 	font-size: 20px; 
 	text-shadow: 2px 2px 4px rgba(0,0,0,0.5); 
 }
+
+/* css 영화보기 좋은날씨 부분 */
+#weather-text {
+    text-align: center; 
+    color: black; 
+}
+
+#weather-text h2 {
+    margin-bottom: 40px; 
+}
+#sun {
+	color: white;
+	font-size: 25px;
+}
