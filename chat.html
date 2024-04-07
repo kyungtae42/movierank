@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>채팅 예시</title>
+<style>
+    body { font-family: Arial, sans-serif; }
+    .comment-form { margin-bottom: 20px; }
+    .comment { margin-bottom: 10px; padding: 10px; background-color: #f2f2f2; }
+</style>
+
+<script>
+    function postComment() {
+        const userId = document.getElementById('userId').value.trim();
+        const password = document.getElementById('password').value;
+        const commentText = document.getElementById('commentText').value.trim();
+
+        // 그 아이디,비밀번호,내용 중에 1개라도 안적었을시 알람창
+        if (!userId || !password || !commentText) {
+            alert('아이디, 비밀번호, 댓글을 모두 입력해주세요.');
+            return;
+        }
+
+        // 댓글을 화면에 추가
+        const commentSection = document.getElementById('commentSection');
+        const newComment = document.createElement('div');
+        newComment.classList.add('comment');
+        newComment.textContent = `${userId}: ${commentText}`;
+        commentSection.appendChild(newComment);
+
+        // 입력 필드 초기화
+        document.getElementById('userId').value = '';
+        document.getElementById('password').value = '';
+        document.getElementById('commentText').value = '';
+    }
+
+    //이걸 이용해 영화 게시글에 댓글+내용 달기  // db연결 안돼있음.
+</script>
+</head>
+
+<body>
+<div class="comment-form">
+    <input type="text" id="userId" placeholder="아이디">
+    <input type="password" id="password" placeholder="비밀번호">
+    <textarea id="commentText" placeholder="댓글을 입력하세요..."></textarea>
+    <button onclick="postComment()">댓글 작성</button>
+</div>
+
+<div id="commentSection"></div>
+
+
+</body>
+</html>
