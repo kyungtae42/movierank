@@ -17,7 +17,110 @@
 	<script src="js/jquery.dropotron.min.js"></script>
 	<script src="js/skel.min.js"></script>
 	<script src="js/skel-layers.min.js"></script>
-	<script src="js/init.js"></script><noscript>
+	<script src="js/init.js"></script>
+	<script type="module">
+		const urlParams = new URL(location.href).searchParams;
+		const detail_id = urlParams.get('detail_id');
+
+		import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+		import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+		import { collection, doc, getDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+		const firebaseConfig = {
+			apiKey: "AIzaSyDy2-_qLegwN6JeEwv9I0Q6MT2F98MsPmk",
+			authDomain: "movierank-a6de4.firebaseapp.com",
+			projectId: "movierank-a6de4",
+			storageBucket: "movierank-a6de4.appspot.com",
+			messagingSenderId: "596989656968",
+			appId: "1:596989656968:web:90abf8428fcc424f94c43d",
+			measurementId: "G-RH5EV4QVKS"
+		};
+
+		const app = initializeApp(firebaseConfig);
+		const db = getFirestore(app);
+		let docs = doc(db, "movie_detail", detail_id);
+		let movie_detail = await getDoc(docs);
+
+		let row = movie_detail.data();
+		let title = row['title'];
+		let poster = row['poster'];
+		let link = row['link'];
+		let date = row['date'];
+		let director = row['director'];
+		let actor = row['actor'];
+		let sum_id = row['sum_id'];
+		let docs_sum = doc(db, "movies", sum_id);
+		let temp_html = `
+		<div class="row">
+
+		<!-- Sidebar -->
+		<div id="sidebar" class="4u">
+			<section>
+				<header class="major">
+					<h2>감독</h2>
+				</header>
+				<div class="row half">
+					<section class="6u">
+						<ul class="default">
+							<li><a href="#">감독 사진</a></li>
+							<li>${director}</li>
+
+						</ul>
+					</section>
+					<section class="6u">
+						<ul class="default small">
+
+						</ul>
+					</section>
+				</div>
+			</section>
+			<section>
+				<header class="major">
+					<h2>출연진</h2>
+				</header>
+				<ul class="default">
+					<li><a href="#">주연 1 사진</a></li>
+					<li>${actor}</li>
+					<li><a href="#">주연 2 사진</a></li>
+					<li><a href="#">주연 2</a></li>
+				</ul>
+			</section>
+		</div>
+
+		<!-- Content -->
+		<div id="content" class="8u skel-cell-important">
+			<section>
+				<header class="major">
+					<h2>${title} </h2>
+					<span class="tag">개봉일:${date}</span>
+					<span class="byline"><img src="${poster}" alt=""
+							width="368" height="368"></span>
+							<iframe width="320" height="240" src="${link}" 
+				frameborder="0" allow="accelerometer; autoplay; clipboard-write; 
+				encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+					<span class="byline">-명대사-</span>
+					
+				</header>
+				
+			</section>
+		</div>
+		</div>
+		<div class="backbtn"> <button type="button" class="btn btn-primary btn-lg">뒤로가기</button>
+		</div>
+		`
+		$('#page').append(temp_html);
+
+		$("#updatebtn").click(async function () {
+			window.location.href = "movie_update.html?detail_id=" + detail_id;
+		})
+		$("#deletebtn").click(async function () {
+			if (confirm("삭제하시겠습니까?")) {
+				await deleteDoc(docs);
+				await deleteDoc(docs_sum);
+				window.location.href = "index.html";
+			}
+		})
+	</script>
+	<noscript>
 		<link rel="stylesheet" href="css/skel.css">
 		<link rel="stylesheet" href="css/style.css">
 		<link rel="stylesheet" href="css/style-wide.css">
@@ -52,10 +155,10 @@
 
 		<!-- Page -->
 		<div id="page" class="container">
-			<div class="row">
+			<!--div class="row"-->
 
 				<!-- Sidebar -->
-				<div id="sidebar" class="4u">
+				<!--div id="sidebar" class="4u">
 					<section>
 						<header class="major">
 							<h2>감독</h2>
@@ -86,10 +189,10 @@
 							<li><a href="#">주연 2</a></li>
 						</ul>
 					</section>
-				</div>
+				</div-->
 
 				<!-- Content -->
-				<div id="content" class="8u skel-cell-important">
+				<!--div id="content" class="8u skel-cell-important">
 					<section>
 						<header class="major">
 							<h2>예고편 </h2>
@@ -100,9 +203,9 @@
 						<div class="video">영상 자리</div>
 					</section>
 				</div>
-			</div>
-			<div class="backbtn"> <button type="button" class="btn btn-primary btn-lg">뒤로가기</button>
-			</div>
+			</div-->
+			<!--div class="backbtn"> <button type="button" class="btn btn-primary btn-lg">뒤로가기</button>
+			</div-->
 		</div>
 	</div>
 </body>
