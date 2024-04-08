@@ -46,8 +46,13 @@
 		let link = row['link'];
 		let date = row['date'];
 		let director = row['director'];
-		let actor = row['actor'];
+		let director_photo = row['director_photo'];
+		let actor1 = row['actor1'];
+		let actor1_photo = row['actor1_photo'];
+		let actor2 = row['actor2'];
+		let actor2_photo = row['actor2_photo'];
 		let sum_id = row['sum_id'];
+
 		let docs_sum = doc(db, "movies", sum_id);
 		let temp_html = `
 		<div class="row">
@@ -61,7 +66,8 @@
 				<div class="row half">
 					<section class="6u">
 						<ul class="default">
-							<li><a href="#">감독 사진</a></li>
+							<li><img src="${director_photo}" alt=""
+							width="64" height="64"></li>
 							<li>${director}</li>
 
 						</ul>
@@ -78,10 +84,12 @@
 					<h2>출연진</h2>
 				</header>
 				<ul class="default">
-					<li><a href="#">주연 1 사진</a></li>
-					<li>${actor}</li>
-					<li><a href="#">주연 2 사진</a></li>
-					<li><a href="#">주연 2</a></li>
+					<li><img src="${actor1_photo}" alt=""
+							width="64" height="64"></li>
+					<li>${actor1}</li>
+					<li><img src="${actor2_photo}" alt=""
+							width="64" height="64"></li>
+					<li>${actor2}</li>
 				</ul>
 			</section>
 		</div>
@@ -104,7 +112,7 @@
 			</section>
 		</div>
 		</div>
-		<div class="backbtn"> <button type="button" class="btn btn-primary btn-lg">뒤로가기</button>
+		<div class="backbtn"> <button type="button" onClick="window.location.href='index.html'" class="btn btn-primary btn-lg">뒤로가기</button>
 		</div>
 		`
 		$('#page').append(temp_html);
