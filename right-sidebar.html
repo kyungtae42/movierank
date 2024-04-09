@@ -31,22 +31,16 @@
 			align-items: stretch;
 		}
 
-		.flex {
-			flex: 1
-		}
 
-		.guide>* {
-			outline: 1px solid #4f80ff;
-		}
 
 		.actor {
 
-			width: 300px
+			flex: 1
 		}
 
 		.preview {
 			
-			width: 1000px
+			flex: 3
 		}
 	</style>
 </head>
@@ -196,7 +190,33 @@
 				</section>
 
 
-
+				<section>
+					<div class="toast-container position-static">
+						<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+						  <div class="toast-header">
+							<img src="..." class="rounded me-2" alt="...">
+							<strong class="me-auto">코멘트</strong>
+							<small class="text-body-secondary">just now</small>
+							<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+						  </div>
+						  <div class="toast-body">
+							최고의 영화입니다!
+						  </div>
+						</div>
+					  
+						<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+						  <div class="toast-header">
+							<img src="..." class="rounded me-2" alt="...">
+							<strong class="me-auto">코멘트</strong>
+							<small class="text-body-secondary">2 seconds ago</small>
+							<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+						  </div>
+						  <div class="toast-body">
+							두번 봤는데 또 보고싶네요 ㅎㅎ
+						  </div>
+						</div>
+					  </div>
+				</section>
 
 
 			</div>
