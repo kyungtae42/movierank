@@ -19,114 +19,69 @@
 	<script src="js/skel-layers.min.js"></script>
 	<script src="js/init.js"></script>
 	<script type="module">
-		// const urlParams = new URL(location.href).searchParams;
-		// const detail_id = urlParams.get('detail_id');
+		let today=new Date();
+		let year=today.getFullYear();
+		let month="0"+(today.getMonth()+1);
+		let submonth=month.substr(-2, 2);
+		let day="0"+today.getDate();
+		let subday=day.substr(-2, 2);
+		let today_string=year+"-"+submonth+"-"+subday;
+		$('#date').val(today_string);
+		import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+		import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
+		import { collection, doc, getDocs, addDoc, updateDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 
-		// import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
-		// import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-		// import { collection, doc, getDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-		// const firebaseConfig = {
-		// 	apiKey: "AIzaSyDy2-_qLegwN6JeEwv9I0Q6MT2F98MsPmk",
-		// 	authDomain: "movierank-a6de4.firebaseapp.com",
-		// 	projectId: "movierank-a6de4",
-		// 	storageBucket: "movierank-a6de4.appspot.com",
-		// 	messagingSenderId: "596989656968",
-		// 	appId: "1:596989656968:web:90abf8428fcc424f94c43d",
-		// 	measurementId: "G-RH5EV4QVKS"
-		// };
+		const firebaseConfig = {
+			apiKey: "AIzaSyDy2-_qLegwN6JeEwv9I0Q6MT2F98MsPmk",
+			authDomain: "movierank-a6de4.firebaseapp.com",
+			projectId: "movierank-a6de4",
+			storageBucket: "movierank-a6de4.appspot.com",
+			messagingSenderId: "596989656968",
+			appId: "1:596989656968:web:90abf8428fcc424f94c43d",
+			measurementId: "G-RH5EV4QVKS"
+		};
 
-		// const app = initializeApp(firebaseConfig);
-		// const db = getFirestore(app);
-		// let docs = doc(db, "movie_detail", detail_id);
-		// let movie_detail = await getDoc(docs);
+		const app = initializeApp(firebaseConfig);
+		const db = getFirestore(app);
 
-		// let row = movie_detail.data();
-		// let title = row['title'];
-		// let poster = row['poster'];
-		// let link = row['link'];
-		// let date = row['date'];
-		// let director = row['director'];
-		// let director_photo = row['director_photo'];
-		// let actor1 = row['actor1'];
-		// let actor1_photo = row['actor1_photo'];
-		// let actor2 = row['actor2'];
-		// let actor2_photo = row['actor2_photo'];
-		// let sum_id = row['sum_id'];
+		const movies = collection(db, "movies");
+		const movie_detail = collection(db, "movie_detail")
+		$("#savebtn").click(async function () {
+			let title = $('#title').val();
+			let poster = $('#poster').val();
+			let link = $('#link').val();
+			let embed_link = link.replace('/watch?v=', '/embed/')
+			let date = $('#date').val();
+			let director = $('#director').val();
+			let director_photo = $('#director_photo').val();
+			let actor1 = $('#actor1').val();
+			let actor1_photo = $('#actor1_photo').val();
+			let actor2 = $('#actor2').val();
+			let actor2_photo = $('#actor2_photo').val();
 
-		// let docs_sum = doc(db, "movies", sum_id);
-		// let temp_html = `
-		// <div class="row">
-
-		// <!-- Sidebar -->
-		// <div id="sidebar" class="4u">
-		// 	<section>
-		// 		<header class="major">
-		// 			<h2>감독</h2>
-		// 		</header>
-		// 		<div class="row half">
-		// 			<section class="6u">
-		// 				<ul class="default">
-		// 					<li><img src="${director_photo}" alt=""
-		// 					width="64" height="64"></li>
-		// 					<li>${director}</li>
-
-		// 				</ul>
-		// 			</section>
-		// 			<section class="6u">
-		// 				<ul class="default small">
-
-		// 				</ul>
-		// 			</section>
-		// 		</div>
-		// 	</section>
-		// 	<section>
-		// 		<header class="major">
-		// 			<h2>출연진</h2>
-		// 		</header>
-		// 		<ul class="default">
-		// 			<li><img src="${actor1_photo}" alt=""
-		// 					width="64" height="64"></li>
-		// 			<li>${actor1}</li>
-		// 			<li><img src="${actor2_photo}" alt=""
-		// 					width="64" height="64"></li>
-		// 			<li>${actor2}</li>
-		// 		</ul>
-		// 	</section>
-		// </div>
-
-		// <!-- Content -->
-		// <div id="content" class="8u skel-cell-important">
-		// 	<section>
-		// 		<header class="major">
-		// 			<h2>${title} </h2>
-		// 			<span class="tag">개봉일:${date}</span>
-		// 			<span class="byline"><img src="${poster}" alt=""
-		// 					width="368" height="368">
-		// 					<iframe width="320" height="240" src="${link}" 
-		// 		frameborder="0" allow="accelerometer; autoplay; clipboard-write; 
-		// 		encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></span>
-		// 			<span class="byline">-명대사-</span>
-					
-		// 		</header>
-				
-		// 	</section>
-		// </div>
-		// </div>
-		// <div class="backbtn"> <button type="button" onClick="window.location.href='index.html'" class="btn btn-primary btn-lg">뒤로가기</button>
-		// </div>
-		// `
-		// $('#page').append(temp_html);
-
-		// $("#updatebtn").click(async function () {
-		// 	window.location.href = "movie_update.html?detail_id=" + detail_id;
-		// })
-		// $("#deletebtn").click(async function () {
-		// 	if (confirm("삭제하시겠습니까?")) {
-		// 		await deleteDoc(docs);
-		// 		await deleteDoc(docs_sum);
-		// 		window.location.href = "index.html";
-		// 	}
-		// })
+			let movie_info = {
+				'title': title,
+				'poster': poster,
+				'link': embed_link,
+				'date': date,
+				'director': director,
+				'director_photo': director_photo,
+				'actor1': actor1,
+				'actor1_photo': actor1_photo,
+				'actor2': actor2,
+				'actor2_photo': actor2_photo,
+			}
+			let generated_movie = await addDoc(collection(db, "movie_detail"), movie_info);
+			
+			let movie_sum = {
+				'title': title,
+				'poster': poster,
+				'detail_id': generated_movie.id 
+			}
+			let generated_movie_sum = await addDoc(collection(db, "movies"), movie_sum);
+			await updateDoc(doc(movie_detail, generated_movie.id), {'sum_id' : generated_movie_sum.id})
+			window.location.href = "index.html";
+		})
 	</script>
 	<noscript>
 		<link rel="stylesheet" href="css/skel.css">
@@ -174,8 +129,8 @@
 						<div class="row half">
 							<section class="6u">
 								<ul class="default">
-									<li><input type="text" placeholder="감독 사진"></li>
-									<li><input type="text" placeholder="감독 명"></li>
+									<li><input type="text" id="director_photo" placeholder="감독 사진"></li>
+									<li><input type="text" id="director" placeholder="감독 명"></li>
 
 								</ul>
 							</section>
@@ -191,11 +146,10 @@
 							<h2>출연진</h2>
 						</header>
 						<ul class="default">
-							<li><input type="text" placeholder="주연 1 사진"></a></li>
-							<li><input type="text" placeholder="주연 1"> </a></li>
-							<li><input type="text" placeholder="주연 2 사진"></a></li>
-							<li><input type="text" placeholder="주연 2"></a></li>
-
+							<li><input type="text" id="actor1_photo" placeholder="주연 1 사진"></a></li>
+							<li><input type="text" id="actor1" placeholder="주연 1"> </a></li>
+							<li><input type="text" id="actor2_photo" placeholder="주연 2 사진"></a></li>
+							<li><input type="text" id="actor2" placeholder="주연 2"></a></li>
 						</ul>
 					</section>
 				</div>
@@ -204,17 +158,22 @@
 				<div id="content" class="8u skel-cell-important">
 					<section>
 						<header class="major">
-							<h2>예고편 </h2>
-							<li><input type="text" placeholder="TRAILER"></li>
-							<li><input type="text" placeholder="URL"></li>
-							<li><input type="text" placeholder="명대사"></li>
-
+							<h2>영화 입력 </h2>
+							<li><input type="text" id="title" placeholder="제목"></li>
+							<li><input type="date"
+								id="date"
+								max="2077-12-31"
+								min="1970-01-01"
+								value="2077-06-15"></li>
+							<li><input type="text" id="poster" placeholder="포스터"></li>
 						</header>
-						<li><input type="text" placeholder="영상자리"></li>
+						<li><input type="text" id="link" placeholder="TRAILER"></li>
 					</section>
 				</div>
 			</div-->
-			<div class="backbtn"> <button type="button" class="btn btn-primary btn-lg">뒤로가기</button>
+			<div class="backbtn"> 
+				<button type="button" id="savebtn" class="btn btn-primary btn-lg">저장</button>
+				<button type="button" onClick="window.location.href='index.html'" class="btn btn-primary btn-lg">뒤로가기</button>
 			</div>
 		</div>
 	</div>
