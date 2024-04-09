@@ -112,13 +112,16 @@
 			</section>
 		</div>
 		</div>
-		<div class="backbtn"> <button type="button" onClick="window.location.href='index.html'" class="btn btn-primary btn-lg">뒤로가기</button>
+		<div class="backbtn">
+			<button type="button" id="updatebtn" class="btn btn-primary btn-lg">수정</button> 
+			<button type="button" id="deletebtn" class="btn btn-primary btn-lg">삭제</button> 
+			<button type="button" onClick="window.location.href='index.html'" class="btn btn-primary btn-lg">뒤로가기</button>
 		</div>
 		`
 		$('#page').append(temp_html);
 
 		$("#updatebtn").click(async function () {
-			window.location.href = "movie_update.html?detail_id=" + detail_id;
+			window.location.href = "left-sidebar2-update.html?detail_id=" + detail_id;
 		})
 		$("#deletebtn").click(async function () {
 			if (confirm("삭제하시겠습니까?")) {
