@@ -1,3 +1,9 @@
+let url = "http://spartacodingclub.shop/sparta_api/weather/seoul";
+fetch(url).then(res => res.json()).then(data => {
+    let temp = data['temp'];
+    $('#sun').text(temp);
+})
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
 import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
@@ -17,20 +23,32 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 let docs = await getDocs(collection(db, "movies"));
+var myArray = new Array();
 docs.forEach(doc => {
     let row = doc.data();
-    let title = row['title'];
-    let detail_id = row['detail_id'];
-    let poster = row['poster'];
-
-    let temp_html = `
-    <section class="4u"><a href="#" class="image featured"><img src="${poster}" alt=""
-                        width="400" height="600"></a>
-                <div class="box">
-                    <p>${title}</p>
-                    <a href="movie_detail.html?detail_id=${detail_id}" class="button">Read More</a>
-                </div>
-    </section>
-    `
-    $('#movies').append(temp_html);
+    myArray.push(row);
 });
+console.log(myArray)
+for(let i=0; i<myArray.length; i=i+3) {
+    console.log(i)
+    let temp_html = `<div class="row no-collapse-1" id=movie${i}>
+    </div>`
+    $('#movie').append(temp_html);
+    for(let j=i; j<i+3; j++) {
+        console.log(j)
+        let title = myArray[j]['title'];
+        let detail_id = myArray[j]['detail_id'];
+        let poster = myArray[j]['poster'];
+
+        temp_html = `
+        <section class="4u"><a href="#" class="image featured"><img src="${poster}" alt=""
+                    width="368" height="368"></a>
+                    <div class="box">
+                        <p>${title}</p>
+                        <a href="movie_detail.html?detail_id=${detail_id}" class="button">Read More</a>
+                    </div>
+        </section>
+        `
+        $('#movie'+i).append(temp_html);
+    }
+}
