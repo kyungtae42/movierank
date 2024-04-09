@@ -23,7 +23,7 @@
 		import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 		import { collection, addDoc } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
 		import { getDocs } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore.js";
-		
+
 		const firebaseConfig = {
 			apiKey: "AIzaSyDy2-_qLegwN6JeEwv9I0Q6MT2F98MsPmk",
 			authDomain: "movierank-a6de4.firebaseapp.com",
@@ -33,10 +33,10 @@
 			appId: "1:596989656968:web:90abf8428fcc424f94c43d",
 			measurementId: "G-RH5EV4QVKS"
 		};
-	
+
 		const app = initializeApp(firebaseConfig);
 		const db = getFirestore(app);
-	
+
 		let docs = await getDocs(collection(db, "movies"));
 		var myArray = new Array();
 		docs.forEach(doc => {
@@ -44,31 +44,30 @@
 			myArray.push(row);
 		});
 		console.log(myArray)
-		for(let i=0; i<myArray.length; i=i+3) {
-			let temp_html = `<div class="row no-collapse-1" id=movie${i}>
-			</div>`
+		for (let i = 0; i < myArray.length; i = i + 3) {
+			let temp_html = `<div class="row no-collapse-1" id=movie${i}></div>`
 			$('#movie').append(temp_html);
-			for(let j=i; j<i+3; j++) {
+			for (let j = i; j < i + 3; j++) {
 				let title = myArray[j]['title'];
 				let detail_id = myArray[j]['detail_id'];
 				let poster = myArray[j]['poster'];
 				let rating = myArray[j]['rating'];
 				let stars = "";
-				for (let i = 0; i < rating; i++) {
+				for (let k = 0; k < rating; k++) {
 					stars += "★";
 				}
-				let rating_html =  stars.length > 0 ? "<span class='star-rating'>"+stars+"</span>" : "평점 정보 없음";	
+				let rating_html =  stars.length > 0 ? "평점: <span class='star-rating'>"+stars+"</span>" : "평점 정보 없음";
 				temp_html = `
-				<section class="4u"><a href="#" class="image featured"><img src="${poster}" alt=""
-							width="368" height="368"></a>
-							<div class="box">
-								<p>${title}</p>
-								<p>${rating_html}</p>
-								<a href="movie-detail.html?detail_id=${detail_id}" class="button">상세 보기</a>
-							</div>
-				</section>
-				`
-				$('#movie'+i).append(temp_html);
+        <section class="4u"><a href="#" class="image featured"><img src="${poster}" alt=""
+                    width="368" height="368"></a>
+                    <div class="box">
+                        <p>${title}</p>
+                        <p>${rating_html}</p>
+                        <a href="movie-detail.html?detail_id=${detail_id}" class="button">상세 보기</a>
+                    </div>
+        </section>
+        `
+				$('#movie' + i).append(temp_html);
 			}
 		}
 	</script>
@@ -78,6 +77,12 @@
 		<link rel="stylesheet" href="css/style-wide.css">
 	</noscript>
 </head>
+
+<style>
+    .star-rating {
+        color: yellow;
+    }
+</style>
 
 
 <body>
@@ -101,7 +106,7 @@
 
 		<!-- 영화보기 좋은 기온 -->
 		<div id="weather-text" class="container">
-			<h2>영화 보기 좋은 날씨:<span id ="sun"></span>도</h2>
+			<h2>영화 보기 좋은 날씨:<span id="sun"></span>도</h2>
 		</div>
 
 		<!-- main -->
@@ -110,116 +115,7 @@
 
 			</div>
 		</div>
-		<!--div id="extra">
-			<div class="container"-->
-				<!-- First Row -->
-				<!--div class="row no-collapse-1">
-					<section class="4u"><a href="#" class="image featured"><img src="images/pic01.jpg" alt=""
-								width="368" height="160"></a>
-						<div class="box">
-							<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum wisi
-								maecenas ligula.</p>
-							<a href="#" class="button">Read More</a>
-						</div>
-					</section>
-					<section class="4u"><a href="#" class="image featured"><img src="images/pic02.jpg" alt=""
-								width="368" height="160"></a>
-						<div class="box">
-							<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum wisi
-								maecenas ligula.</p>
-							<a href="#" class="button">Read More</a>
-						</div>
-					</section>
-					<section class="4u"><a href="#" class="image featured"><img src="images/pic03.jpg" alt=""
-								width="368" height="160"></a>
-						<div class="box">
-							<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum wisi
-								maecenas ligula.</p>
-							<a href="#" class="button">Read More</a>
-						</div>
-					</section>
-				</div-->
-				<!-- 2번쨰 -->
-				<!--div class="row no-collapse-1">
-					<section class="4u"><a href="#" class="image featured"><img src="images/3idiot.jpg" alt=""
-								width="368" height="368"></a>
-						<div class="box">
-							<p>세 얼 간 이</p>
-							<a href="#" class="button">자세히 보기</a>
-						</div>
-					</section>
-					<section class="4u"><a href="#" class="image featured"><img src="images/Homealone.jpg" alt=""
-								width="368" height="368"></a>
-						<div class="box">
-							<p>나 홀로 집에</p>
-							<a href="#" class="button">자세히 보기</a>
-						</div>
-					</section>
-					<section class="4u"><a href="#" class="image featured"><img src="images/trumanshow.jpg" alt=""
-								width="368" height="368"></a>
-						<div class="box">
-							<p>트루먼쇼</p>
-							<a href="#" class="button">자세히 보기</a>
-						</div>
-					</section>
-				</div-->
-				<!-- 3-->
-				<!--div class="row no-collapse-1">
-					<section class="4u"><a href="#" class="image featured"><img src="images/pic01.jpg" alt=""
-								width="368" height="160"></a>
-						<div class="box">
-							<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum wisi
-								maecenas ligula.</p>
-							<a href="#" class="button">Read More</a>
-						</div>
-					</section>
-					<section class="4u"><a href="#" class="image featured"><img src="images/pic02.jpg" alt=""
-								width="368" height="160"></a>
-						<div class="box">
-							<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum wisi
-								maecenas ligula.</p>
-							<a href="#" class="button">Read More</a>
-						</div>
-					</section>
-					<section class="4u"><a href="#" class="image featured"><img src="images/pic03.jpg" alt=""
-								width="368" height="160"></a>
-						<div class="box">
-							<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum wisi
-								maecenas ligula.</p>
-							<a href="#" class="button">Read More</a>
-						</div>
-					</section>
-				</div-->
-				<!-- 4 -->
-				<!--div class="row no-collapse-1">
-					<section class="4u"><a href="#" class="image featured"><img src="images/pic01.jpg" alt=""
-								width="368" height="160"></a>
-						<div class="box">
-							<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum wisi
-								maecenas ligula.</p>
-							<a href="#" class="button">Read More</a>
-						</div>
-					</section>
-					<section class="4u"><a href="#" class="image featured"><img src="images/pic02.jpg" alt=""
-								width="368" height="160"></a>
-						<div class="box">
-							<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum wisi
-								maecenas ligula.</p>
-							<a href="#" class="button">Read More</a>
-						</div>
-					</section>
-					<section class="4u"><a href="#" class="image featured"><img src="images/pic03.jpg" alt=""
-								width="368" height="160"></a>
-						<div class="box">
-							<p>Donec leo, vivamus fermentum nibh in augue praesent a lacus at urna congue rutrum wisi
-								maecenas ligula.</p>
-							<a href="#" class="button">Read More</a>
-						</div>
-					</section>
-				</div>
-			</div>
-		</div-->
-		<!-- Footer -->
+
 
 		<!-- Copyright -->
 
