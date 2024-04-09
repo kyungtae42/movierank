@@ -42,8 +42,8 @@
 		const movies = collection(db, "movies");
 		const movie_update = collection(db, "movie_detail")
 
-		let docs = doc(db, "movie_detail", detail_id);
-		let movie_detail = await getDoc(docs);
+		let docs_movie_detail = doc(db, "movie_detail", detail_id);
+		let movie_detail = await getDoc(docs_movie_detail);
 		let row = movie_detail.data();
 		let title = row['title'];
 		let poster = row['poster'];
@@ -67,6 +67,12 @@
 		$('#actor2').val(actor2);
 		$('#actor2_photo').val(actor2_photo);
 
+		let docs_movie_list = doc(db, "movies", sum_id);
+		let movie_list = await getDoc(docs_movie_list);
+		row = movie_list.data();
+		let rating = row['rating'];
+		$('#rating').val(rating);
+
 		$("#savebtn").click(async function () {
 			let title = $('#title').val();
 			let poster = $('#poster').val();
@@ -79,6 +85,7 @@
 			let actor1_photo = $('#actor1_photo').val();
 			let actor2 = $('#actor2').val();
 			let actor2_photo = $('#actor2_photo').val();
+			let rating = $('#rating').val();
 
 			let movie_info = {
 				'title': title,
@@ -94,7 +101,8 @@
 			}
 			let movie_sum = {
 				'title': title,
-				'poster': poster
+				'poster': poster,
+				'rating': rating
 			}
 			await updateDoc(doc(movies, sum_id), movie_sum);
 			await updateDoc(doc(movie_update, detail_id), movie_info);
@@ -127,8 +135,7 @@
 			<nav id="nav">
 				<ul>
 					<li class="active"><a href="index.html">Homepage</a></li>
-					<li><a href="left-sidebar.html">information</a></li>
-					<li><a href="no-sidebar.html">movie input</a></li>
+					<li><a href="movie-create.html">영화 저장하기</a></li>
 				</ul>
 			</nav>
 		</div>
@@ -186,12 +193,20 @@
 							<li><input type="text" id="poster" placeholder="포스터"></li>
 						</header>
 						<li><input type="text" id="link" placeholder="TRAILER"></li>
+						<li><select name="별점" id="rating">
+							<option value="" selected>별점</option>
+							<option value="1">★</option>
+							<option value="2">★★</option>
+							<option value="3">★★★</option>
+							<option value="4">★★★★</option>
+							<option value="5">★★★★★</option>
+						  </select></li>
 					</section>
 				</div>
 			</div-->
 			<div class="backbtn"> 
 				<button type="button" id="savebtn" class="btn btn-primary btn-lg">저장</button>
-				<button type="button" onClick="window.location.href='index.html'" class="btn btn-primary btn-lg">뒤로가기</button>
+				<button type="button" onClick="history.back();" class="btn btn-primary btn-lg">뒤로가기</button>
 			</div>
 		</div>
 	</div>

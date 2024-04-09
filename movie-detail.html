@@ -37,8 +37,8 @@
 
 		const app = initializeApp(firebaseConfig);
 		const db = getFirestore(app);
-		let docs = doc(db, "movie_detail", detail_id);
-		let movie_detail = await getDoc(docs);
+		let docs_movie_detail = doc(db, "movie_detail", detail_id);
+		let movie_detail = await getDoc(docs_movie_detail);
 
 		let row = movie_detail.data();
 		let title = row['title'];
@@ -53,7 +53,16 @@
 		let actor2_photo = row['actor2_photo'];
 		let sum_id = row['sum_id'];
 
-		let docs_sum = doc(db, "movies", sum_id);
+		let docs_movie_list = doc(db, "movies", sum_id);
+		let movie_list = await getDoc(docs_movie_list);
+		row = movie_list.data();
+		let rating = row['rating'];
+		let stars = "";
+		for (let i = 0; i < rating; i++) {
+			stars += "★";
+		}
+		let rating_html =  stars.length > 0 ? stars : "평점 정보 없음";	
+
 		let temp_html = `
 		<div class="row">
 
@@ -105,7 +114,7 @@
 							<iframe width="320" height="240" src="${link}" 
 				frameborder="0" allow="accelerometer; autoplay; clipboard-write; 
 				encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></span>
-					<span class="byline">-명대사-</span>
+					<span class="byline">${rating_html}</span>
 					
 				</header>
 				
@@ -121,12 +130,12 @@
 		$('#page').append(temp_html);
 
 		$("#updatebtn").click(async function () {
-			window.location.href = "left-sidebar2-update.html?detail_id=" + detail_id;
+			window.location.href = "movie-update.html?detail_id=" + detail_id;
 		})
 		$("#deletebtn").click(async function () {
 			if (confirm("삭제하시겠습니까?")) {
-				await deleteDoc(docs);
-				await deleteDoc(docs_sum);
+				await deleteDoc(docs_movie_detail);
+				await deleteDoc(docs_movie_list);
 				window.location.href = "index.html";
 			}
 		})
@@ -157,8 +166,7 @@
 			<nav id="nav">
 				<ul>
 					<li class="active"><a href="index.html">Homepage</a></li>
-					<li><a href="left-sidebar.html">information</a></li>
-					<li><a href="no-sidebar.html">movie input</a></li>
+					<li><a href="movie-create.html">영화 저장하기</a></li>
 				</ul>
 			</nav>
 		</div>

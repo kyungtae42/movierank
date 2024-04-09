@@ -58,6 +58,7 @@
 			let actor1_photo = $('#actor1_photo').val();
 			let actor2 = $('#actor2').val();
 			let actor2_photo = $('#actor2_photo').val();
+			let rating = $('#rating').val();
 
 			let movie_info = {
 				'title': title,
@@ -76,6 +77,7 @@
 			let movie_sum = {
 				'title': title,
 				'poster': poster,
+				'rating' : rating,
 				'detail_id': generated_movie.id 
 			}
 			let generated_movie_sum = await addDoc(collection(db, "movies"), movie_sum);
@@ -109,8 +111,7 @@
 			<nav id="nav">
 				<ul>
 					<li class="active"><a href="index.html">Homepage</a></li>
-					<li><a href="left-sidebar.html">information</a></li>
-					<li><a href="no-sidebar.html">movie input</a></li>
+					<li><a href="movie-create.html">영화 저장하기</a></li>
 				</ul>
 			</nav>
 		</div>
@@ -168,6 +169,14 @@
 							<li><input type="text" id="poster" placeholder="포스터"></li>
 						</header>
 						<li><input type="text" id="link" placeholder="TRAILER"></li>
+						<li><select name="별점" id="rating">
+							<option value="" selected>별점</option>
+							<option value="1">★</option>
+							<option value="2">★★</option>
+							<option value="3">★★★</option>
+							<option value="4">★★★★</option>
+							<option value="5">★★★★★</option>
+						  </select></li>
 					</section>
 				</div>
 			</div-->
